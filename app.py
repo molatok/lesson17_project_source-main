@@ -22,12 +22,11 @@ class MovieView(Resource):
         director_id = request.args.get('director_id')
         genre_id = request.args.get('genre_id')
         if director_id:
-            did = request.args.get('director_id')
             movies_with_genre_and_director = movies_with_genre_and_director.filter(Movie.director_id == director_id)
         if genre_id:
             movies_with_genre_and_director = movies_with_genre_and_director.filter(Movie.genre_id == genre_id)
         all_movies = movies_with_genre_and_director.all()
-        return movies_schema.dupms(all_movies), 200
+        return movies_schema.dupm(all_movies), 200
 
     def post(self):
         req_json = request.json
@@ -47,8 +46,8 @@ class MovieView(Resource):
     def put(self, mid: int):
         movie = db.session.query(Movie).get(mid)
 
-        if movie:
-            return movie_schema.dump(movie)
+        if not movie:
+            return 'не нашли', 404
         return 'не нашли', 404
         req_json = request.json
         movie.title = req_json['title']
