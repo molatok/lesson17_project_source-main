@@ -48,7 +48,6 @@ class MovieView(Resource):
 
         if not movie:
             return 'не нашли', 404
-        return 'не нашли', 404
         req_json = request.json
         movie.title = req_json['title']
         movie.description = req_json['description']
